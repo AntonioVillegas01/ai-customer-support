@@ -45,7 +45,7 @@ pnpm eval                                      # offline AI quality evals
 pnpm loadtest                                  # k6 scripts
 ```
 
-Seed logins (local only): `owner@acme.test` / `admin@acme.test` / `agent@acme.test`, password `Password123!` (second org: `globex.test`).
+Seed logins (local only): `owner@acme.test` / `admin@acme.test` / `agent@acme.test`, password `Password123!Password` (second org: `globex.test`).
 
 ## Documentation
 

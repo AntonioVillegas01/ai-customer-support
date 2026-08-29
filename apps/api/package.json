@@ -1,0 +1,51 @@
+{
+  "name": "@acs/api",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/main.js",
+  "types": "dist/main.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@acs/application": "workspace:*",
+    "@acs/config": "workspace:*",
+    "@acs/contracts": "workspace:*",
+    "@acs/domain": "workspace:*",
+    "@acs/logger": "workspace:*",
+    "@acs/persistence": "workspace:*",
+    "@nestjs/common": "^11.1.9",
+    "@nestjs/core": "^11.1.9",
+    "@nestjs/platform-express": "^11.1.9",
+    "@nestjs/swagger": "^11.2.3",
+    "argon2": "^0.44.0",
+    "bullmq": "^5.65.1",
+    "cookie": "^1.0.2",
+    "drizzle-orm": "^0.44.7",
+    "helmet": "^8.1.0",
+    "ioredis": "^5.8.2",
+    "multer": "^2.0.2",
+    "pg": "^8.16.3",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "zod": "^3.25.76",
+    "express": "^5.1.0",
+    "@aws-sdk/client-s3": "^3.940.0"
+  },
+  "devDependencies": {
+    "@acs/eslint-config": "workspace:*",
+    "@acs/testing": "workspace:*",
+    "@acs/typescript-config": "workspace:*",
+    "@types/cookie": "^1.0.0",
+    "@types/express": "^5.0.5",
+    "@types/node": "^22.18.14",
+    "@types/pg": "^8.15.5",
+    "eslint": "^9.39.0",
+    "supertest": "^7.1.4",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

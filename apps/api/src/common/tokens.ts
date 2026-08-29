@@ -1,0 +1,13 @@
+export const CONFIG = Symbol('CONFIG');
+export const DB = Symbol('DB');
+export const PG_POOL = Symbol('PG_POOL');
+export const REDIS = Symbol('REDIS');
+export const LOGGER = Symbol('LOGGER');
+export const UOW = Symbol('UOW');
+export const QUEUE = Symbol('QUEUE');
+export const EVENTS = Symbol('EVENTS');
+export const AUDIT = Symbol('AUDIT');
+export const RATE_LIMITER = Symbol('RATE_LIMITER');
+export const TOOL_REGISTRY = Symbol('TOOL_REGISTRY');
+export const STORAGE = Symbol('STORAGE');
+export const DB_BUNDLE = Symbol('DB_BUNDLE');
