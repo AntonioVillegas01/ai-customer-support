@@ -1,7 +1,5 @@
 # Known limitations
 
-- `apps/api` and `apps/worker` provide production-oriented scaffolding and core persistence-backed flows, but several requested admin/staff endpoints are intentionally minimal pending dedicated use-case ports: member invitations, organization settings, analytics aggregation, AI suggestions, and summarization.
-- Widget knowledge file uploads persist content to S3-compatible storage and validate simple magic bytes; full MIME sniffing and private-DNS redirect validation need hardening before production exposure.
-- SSE uses Redis pub/sub with heartbeats and does not replay missed events. Clients must refetch persisted message history after reconnecting with `Last-Event-ID`.
-- Worker ingestion supports PDF/HTML/Markdown/plain text extraction and rejects DOCX; extraction quality and language detection are basic and should be evaluated with representative corpora.
-- API and worker share the same sandbox tool behavior by duplicated adapters; extract to a dedicated infrastructure package once both apps stabilize.
+- The current API exposes no staff AI suggestion or conversation summary routes, so the dashboard renders explicit unavailable states instead of mock AI output.
+- The current API exposes no member invitation, member role update, organization update, widget list/update, allowed-origin management, or usage-summary routes. Related settings and analytics panels avoid hardcoded data and show unavailable/restricted states where no real endpoint exists.
+- The staff conversation list endpoint currently ignores search, status, and unassigned filters; the web client sends supported-safe query parameters but relies on the API to enforce tenant scope and filtering when those routes are extended.
