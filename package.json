@@ -1,0 +1,31 @@
+{
+  "name": "ai-customer-support",
+  "private": true,
+  "packageManager": "pnpm@11.22.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "test:integration": "turbo run test:integration",
+    "test:e2e": "turbo run test:e2e",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:migrate": "pnpm --filter @acs/persistence db:migrate",
+    "db:seed": "pnpm --filter @acs/persistence db:seed",
+    "db:generate": "pnpm --filter @acs/persistence db:generate",
+    "eval": "pnpm --filter @acs/evals eval",
+    "loadtest": "k6 run load-tests/smoke.js",
+    "compose:up": "docker compose up -d",
+    "compose:down": "docker compose down",
+    "setup": "./scripts/setup.sh"
+  },
+  "devDependencies": {
+    "prettier": "^3.6.2",
+    "turbo": "^2.5.8"
+  }
+}
