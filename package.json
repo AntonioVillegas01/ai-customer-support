@@ -19,7 +19,7 @@
     "db:seed": "pnpm --filter @acs/persistence db:seed",
     "db:generate": "pnpm --filter @acs/persistence db:generate",
     "eval": "pnpm --filter @acs/evals eval",
-    "loadtest": "k6 run load-tests/smoke.js",
+    "loadtest": "k6 run load-tests/widget-messages.js",
     "compose:up": "docker compose up -d",
     "compose:down": "docker compose down",
     "setup": "./scripts/setup.sh"

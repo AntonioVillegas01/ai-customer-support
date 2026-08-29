@@ -1,0 +1,48 @@
+{
+  "version": "v1",
+  "description": "Golden retrieval dataset against the local seed corpus (orgs acme/globex). Expected values are document titles within the querying organization.",
+  "cases": [
+    {
+      "id": "acme-shipping-time",
+      "orgSlug": "acme",
+      "query": "How long does standard shipping take?",
+      "expectedTitles": ["Shipping Policy"]
+    },
+    {
+      "id": "acme-return-window",
+      "orgSlug": "acme",
+      "query": "Can I return an item I bought last week?",
+      "expectedTitles": ["Return Policy"]
+    },
+    {
+      "id": "acme-warranty-length",
+      "orgSlug": "acme",
+      "query": "How long is the accessory warranty?",
+      "expectedTitles": ["Warranty FAQ"]
+    },
+    {
+      "id": "acme-exact-term",
+      "orgSlug": "acme",
+      "query": "express orders overnight",
+      "expectedTitles": ["Shipping Policy"]
+    },
+    {
+      "id": "globex-freight",
+      "orgSlug": "globex",
+      "query": "When do freight orders ship?",
+      "expectedTitles": ["Shipping Policy"]
+    },
+    {
+      "id": "globex-return-authorization",
+      "orgSlug": "globex",
+      "query": "Do I need authorization before returning equipment?",
+      "expectedTitles": ["Return Policy"]
+    },
+    {
+      "id": "globex-warranty",
+      "orgSlug": "globex",
+      "query": "warranty period for industrial equipment",
+      "expectedTitles": ["Warranty FAQ"]
+    }
+  ]
+}
