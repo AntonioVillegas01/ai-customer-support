@@ -89,7 +89,7 @@ export async function confirmTool(
 ): Promise<void> {
   await request(`/v1/conversations/${conversationId}/tool-executions/${confirmationId}/widget-confirm`, token, {
     method: 'POST',
-    body: JSON.stringify({ decision }),
+    body: JSON.stringify({ confirmationId, decision }),
   });
 }
 

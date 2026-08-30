@@ -526,6 +526,16 @@ export class GenerateAiResponseUseCase {
       type: 'message.completed',
       message: serializeMessage(message),
     });
+    await this.audit.record({
+      organizationId: input.organizationId,
+      actorType: 'ai',
+      actorId: null,
+      action: 'conversation.escalated',
+      resourceType: 'conversation',
+      resourceId: input.conversationId,
+      metadata: { reasonCode, explanation },
+      occurredAt: now,
+    });
     return { outcome: 'escalated', assistantMessageId: message.id };
   }
 
