@@ -33,9 +33,11 @@ export const envSchema = z.object({
   WORKER_HEALTH_PORT: z.coerce.number().int().default(3002),
   KNOWLEDGE_UPLOAD_MAX_BYTES: z.coerce.number().int().positive().default(20 * 1024 * 1024),
 
-  AI_PROVIDER: z.enum(['openrouter', 'fake']).default('fake'),
+  AI_PROVIDER: z.enum(['openrouter', 'gemini', 'fake']).default('fake'),
   OPENROUTER_API_KEY: z.string().optional().default(''),
   OPENROUTER_BASE_URL: z.string().url().default('https://openrouter.ai/api/v1'),
+  GEMINI_API_KEY: z.string().optional().default(''),
+  GEMINI_BASE_URL: z.string().url().default('https://generativelanguage.googleapis.com/v1beta'),
   AI_MODEL_GENERATION: z.string().default('openai/gpt-4o-mini'),
   AI_MODEL_CLASSIFICATION: z.string().default('openai/gpt-4o-mini'),
   AI_MODEL_SUMMARIZATION: z.string().default('openai/gpt-4o-mini'),
@@ -90,6 +92,9 @@ function assertProductionSafety(config: AppConfig): void {
   }
   if (config.AI_PROVIDER === 'openrouter' && config.OPENROUTER_API_KEY.length === 0) {
     problems.push('OPENROUTER_API_KEY is required when AI_PROVIDER=openrouter');
+  }
+  if (config.AI_PROVIDER === 'gemini' && config.GEMINI_API_KEY.length === 0) {
+    problems.push('GEMINI_API_KEY is required when AI_PROVIDER=gemini');
   }
   if (problems.length > 0) {
     throw new ConfigValidationError(

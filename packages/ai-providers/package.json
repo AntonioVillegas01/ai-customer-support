@@ -1,0 +1,26 @@
+{
+  "name": "@acs/ai-providers",
+  "version": "0.0.1",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@acs/application": "workspace:*",
+    "@acs/config": "workspace:*",
+    "@acs/testing": "workspace:*"
+  },
+  "devDependencies": {
+    "@acs/eslint-config": "workspace:*",
+    "@acs/typescript-config": "workspace:*",
+    "eslint": "^9.39.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4",
+    "@types/node": "^22.18.14"
+  }
+}

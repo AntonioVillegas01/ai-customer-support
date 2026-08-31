@@ -5,7 +5,7 @@ import { S3Client } from '@aws-sdk/client-s3';
 import { loadConfig, type AppConfig } from '@acs/config';
 import { createLogger } from '@acs/logger';
 import { createDb, DrizzlePromptRegistry, DrizzleUnitOfWork, HybridRetrievalAdapter, type Database } from '@acs/persistence';
-import { FakeEmbeddingProvider } from '@acs/testing';
+import { createAiProviders } from '@acs/ai-providers';
 import { AuthController } from './auth/auth.controller';
 import { SessionService } from './auth/session.service';
 import { AuthGuard, OrgContextGuard, PermissionsGuard, ApiKeyGuard } from './auth/guards';
@@ -40,7 +40,7 @@ import { AdminController } from './admin/admin.controller';
     { provide: AUDIT, useClass: DbAuditAdapter },
     { provide: TOOL_REGISTRY, useClass: SandboxToolRegistry },
     { provide: STORAGE, useFactory: (config: AppConfig) => new S3ObjectStorageAdapter(new S3Client({ region: config.S3_REGION, endpoint: config.S3_ENDPOINT, forcePathStyle: config.S3_FORCE_PATH_STYLE, credentials: { accessKeyId: config.S3_ACCESS_KEY_ID, secretAccessKey: config.S3_SECRET_ACCESS_KEY } })), inject: [CONFIG] },
-    { provide: 'RETRIEVAL', useFactory: (db: Database, config: AppConfig) => new HybridRetrievalAdapter(db, new FakeEmbeddingProvider(config.AI_EMBEDDING_DIMENSIONS), config.AI_MODEL_EMBEDDING), inject: [DB, CONFIG] },
+    { provide: 'RETRIEVAL', useFactory: (db: Database, config: AppConfig) => new HybridRetrievalAdapter(db, createAiProviders(config).embeddings, config.AI_MODEL_EMBEDDING), inject: [DB, CONFIG] },
     { provide: 'PROMPTS', useFactory: (db: Database) => new DrizzlePromptRegistry(db), inject: [DB] },
     { provide: APP_FILTER, useClass: HttpErrorFilter },
     SessionService, AuthGuard, OrgContextGuard, PermissionsGuard, ApiKeyGuard, WidgetTokenService, WidgetTokenGuard, ClockService, IdService,

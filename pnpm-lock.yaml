@@ -17,6 +17,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@acs/ai-providers':
+        specifier: workspace:*
+        version: link:../../packages/ai-providers
       '@acs/application':
         specifier: workspace:*
         version: link:../../packages/application
@@ -223,6 +226,9 @@ importers:
 
   apps/worker:
     dependencies:
+      '@acs/ai-providers':
+        specifier: workspace:*
+        version: link:../../packages/ai-providers
       '@acs/application':
         specifier: workspace:*
         version: link:../../packages/application
@@ -357,6 +363,37 @@ importers:
       tsx:
         specifier: ^4.20.6
         version: 4.23.12
+      typescript:
+        specifier: ^5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.7(@types/node@22.20.1)(jiti@2.7.0)(jsdom@27.4.0(@noble/hashes@1.8.0)(supports-color@7.2.0))(lightningcss@1.32.0)(supports-color@7.2.0)(tsx@4.23.12)
+
+  packages/ai-providers:
+    dependencies:
+      '@acs/application':
+        specifier: workspace:*
+        version: link:../application
+      '@acs/config':
+        specifier: workspace:*
+        version: link:../config
+      '@acs/testing':
+        specifier: workspace:*
+        version: link:../testing
+    devDependencies:
+      '@acs/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@acs/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^22.18.14
+        version: 22.20.1
+      eslint:
+        specifier: ^9.39.0
+        version: 9.39.5(jiti@2.7.0)(supports-color@7.2.0)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3

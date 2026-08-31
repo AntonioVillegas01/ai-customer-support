@@ -4,13 +4,14 @@ Honest inventory of what this platform does **not** do yet, gaps discovered duri
 end-to-end verification, and debt accepted deliberately with its rationale. Every
 item here is confirmed against the actual code — nothing is speculative.
 
-Last reviewed: 2026-08-29 (post final E2E verification, commit `a684018`).
+Last reviewed: 2026-08-31 (post Gemini provider migration).
 
 ## AI and retrieval
 
-- **Fake provider is the default (`AI_PROVIDER=fake`).** The deterministic
-  `FakeLlmProvider` never proposes tool calls and always classifies
-  `requestsHuman: false` when unscripted. Consequences for local/E2E testing:
+- **Fake provider is available for offline runs (`AI_PROVIDER=fake`).** The
+  deterministic `FakeLlmProvider` never proposes tool calls and always
+  classifies `requestsHuman: false` when unscripted. Consequences for offline
+  E2E testing:
   - AI-initiated tool proposals cannot be exercised live; the tool confirmation
     flow was verified by seeding an `awaiting_confirmation` execution directly
     and driving the widget-confirm endpoint. AI-side proposal logic is covered
@@ -21,13 +22,23 @@ Last reviewed: 2026-08-29 (post final E2E verification, commit `a684018`).
 - **The OpenRouter adapter has never been exercised against the live API.**
   It is unit-tested with mocked HTTP; no CI job holds an API key. Retry,
   timeout, and concurrency-limit behavior under real provider latency is
-  unmeasured.
+  unmeasured. The Gemini adapter (`@acs/ai-providers`), by contrast, **has**
+  been verified live: completion, structured output, and embeddings were
+  exercised end-to-end (widget question answered with a grounded, cited reply
+  after re-embedding the corpus with `gemini-embedding-001`).
 - **Retrieval eval numbers use pseudo-embeddings.** `recall@5 = 1.000`,
   `MRR = 0.762` were measured locally against the seeded corpus with the
   deterministic char-code fake embedding (1536 dims). They validate the hybrid
   RRF pipeline mechanically but say nothing about semantic quality with a real
   embedding model. `precision@5 = 0.286` reflects the tiny corpus (7 golden
-  cases, ~7 documents), not production quality.
+  cases, ~7 documents), not production quality. The eval harness has not been
+  re-run against Gemini embeddings.
+- **Switching embedding providers invalidates stored vectors.** Chunk
+  embeddings are not tagged with the model that produced them; after changing
+  `AI_MODEL_EMBEDDING` every source must be manually reprocessed
+  (`POST /orgs/:orgId/knowledge/sources/:id/reprocess`) or vector search
+  silently degrades to lexical-only quality. There is no automated
+  re-embedding migration.
 - **Prompt-injection suite covers 6 scenarios.** It is a regression floor, not
   a red-team. No coverage for multi-turn injection, encoding tricks, or
   tool-argument injection.
@@ -135,3 +146,15 @@ verification trail stays honest:
   table was empty in practice.
 - The widget omitted `confirmationId` from the widget-confirm request body,
   failing schema validation on every tool confirmation.
+
+Fixed during the Gemini provider migration:
+
+- The API composition hardcoded `FakeEmbeddingProvider` for staff knowledge
+  search regardless of `AI_PROVIDER`; adapters were extracted into the shared
+  `@acs/ai-providers` package and both API and worker now compose the
+  configured provider.
+- `POST sources/:id/reprocess` created ingestion jobs without a
+  `documentVersionId`, so every reprocess failed with "ingestion job missing
+  document version"; it also never reset the version status, so the
+  indexed-hash dedupe check would have short-circuited re-embedding anyway.
+  Both fixed.

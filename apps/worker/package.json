@@ -32,7 +32,8 @@
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2",
     "sanitize-html": "^2.17.0",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "@acs/ai-providers": "workspace:*"
   },
   "devDependencies": {
     "@acs/eslint-config": "workspace:*",

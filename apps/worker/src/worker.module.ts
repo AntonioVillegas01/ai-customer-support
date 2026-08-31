@@ -8,7 +8,7 @@ import { loadConfig } from '@acs/config';
 import { asId } from '@acs/domain';
 import { createLogger, type Logger } from '@acs/logger';
 import { createDb, closeDb, DrizzlePromptRegistry, DrizzleUnitOfWork, HybridRetrievalAdapter, messages, outboxEvents, type Database } from '@acs/persistence';
-import { createAiProviders } from './ai/provider-factory';
+import { createAiProviders } from '@acs/ai-providers';
 import { DbAudit, MonthlyBudgetAdapter, RedisPublisher, SystemClock, UuidGenerator, WorkerQueueAdapter } from './infra/adapters';
 import { WorkerSandboxToolRegistry } from './infra/sandbox-tools';
 import { S3ObjectStorageAdapter } from './infra/storage.adapter';

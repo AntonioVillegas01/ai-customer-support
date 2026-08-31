@@ -52,7 +52,10 @@ export class KnowledgeController {
   async reprocess(@Param('orgId') orgId: string, @Param('id') sourceId: string): Promise<unknown> {
     const source = (await this.db.select().from(knowledgeSources).where(and(eq(knowledgeSources.organizationId, orgId), eq(knowledgeSources.id, sourceId), isNull(knowledgeSources.deletedAt))).limit(1))[0];
     if (source === undefined) throw new StableHttpError('NOT_FOUND', 'Source not found');
-    const job = await this.db.insert(ingestionJobs).values({ organizationId: orgId, sourceId, status: 'pending' }).returning();
+    if (source.activeVersionId === null) throw new StableHttpError('VALIDATION_FAILED', 'Source has no active document version to reprocess');
+    // Reset version status so the worker re-extracts and re-embeds instead of short-circuiting on the indexed-hash dedupe check.
+    await this.db.update(documentVersions).set({ status: 'processing', error: null }).where(and(eq(documentVersions.organizationId, orgId), eq(documentVersions.id, source.activeVersionId)));
+    const job = await this.db.insert(ingestionJobs).values({ organizationId: orgId, sourceId, documentVersionId: source.activeVersionId, status: 'pending' }).returning();
     const jobId = job[0]?.id;
     if (jobId !== undefined) await this.queue.enqueueIngestion({ organizationId: asId<'OrganizationId'>(orgId), sourceId, ingestionJobId: jobId, dedupeKey: `ingest:${jobId}` });
     return job[0];
