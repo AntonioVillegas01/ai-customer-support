@@ -41,6 +41,7 @@ class WidgetApp {
   private readonly deltaNodes = new Map<string, HTMLElement>();
   private pendingSend: { content: string; idempotencyKey: string } | null = null;
   private sseAbort: AbortController | null = null;
+  private typingNode: HTMLElement | null = null;
   private log!: HTMLElement;
   private status!: HTMLElement;
   private textarea!: HTMLTextAreaElement;
@@ -134,6 +135,7 @@ class WidgetApp {
       const conversationId = this.conversationId;
       const result = await this.withAuthRetry(() => postMessage(this.token, conversationId, content, idempotencyKey));
       this.renderMessage(result.message);
+      this.showTyping();
       this.pendingSend = null;
       this.textarea.value = '';
       this.textarea.focus();
@@ -186,18 +188,29 @@ class WidgetApp {
     switch (event.type) {
       case 'message.created':
       case 'message.completed':
-        if (event.message !== undefined) this.renderMessage(event.message);
+        if (event.message !== undefined) {
+          if (event.message.role !== 'customer') this.hideTyping();
+          this.renderMessage(event.message);
+        }
         break;
       case 'message.delta':
-        if (event.messageId !== undefined && event.delta !== undefined) this.renderDelta(event.messageId, event.delta);
+        if (event.messageId !== undefined && event.delta !== undefined) {
+          this.hideTyping();
+          this.renderDelta(event.messageId, event.delta);
+        }
         break;
       case 'message.failed':
+        this.hideTyping();
         this.renderSystem(t('aiUnavailable'));
         break;
       case 'conversation.updated':
-        if (event.conversation?.status === 'escalated') this.renderSystem(t('escalated'));
+        if (event.conversation?.status === 'escalated') {
+          this.hideTyping();
+          this.renderSystem(t('escalated'));
+        }
         break;
       case 'tool.confirmation_requested':
+        this.hideTyping();
         if (event.confirmationId !== undefined) {
           this.renderConfirmation(event.confirmationId, event.toolName ?? '', event.summary ?? '', event.expiresAt ?? '');
         }
@@ -257,6 +270,25 @@ class WidgetApp {
     this.log.scrollTop = this.log.scrollHeight;
   }
 
+  /** WhatsApp-style typing bubble shown while the assistant prepares a reply. */
+  private showTyping(): void {
+    if (this.typingNode !== null && this.typingNode.isConnected) return;
+    const node = el('div', {
+      class: 'acs-msg acs-msg-assistant acs-typing',
+      role: 'status',
+      'aria-label': t('typing'),
+    });
+    for (let i = 0; i < 3; i += 1) node.appendChild(el('span', { class: 'acs-typing-dot', 'aria-hidden': 'true' }));
+    this.typingNode = node;
+    this.log.appendChild(node);
+    this.log.scrollTop = this.log.scrollHeight;
+  }
+
+  private hideTyping(): void {
+    this.typingNode?.remove();
+    this.typingNode = null;
+  }
+
   private renderSystem(text: string): void {
     this.appendToLog(el('div', { class: 'acs-msg acs-msg-system', role: 'status' }, text));
   }
@@ -276,6 +308,7 @@ class WidgetApp {
       try {
         await this.withAuthRetry(() => confirmTool(this.token, conversationId, confirmationId, decision));
         card.remove();
+        if (decision === 'approve') this.showTyping();
       } catch {
         this.status.textContent = t('genericError');
         approve.disabled = false;
@@ -300,7 +333,12 @@ class WidgetApp {
   }
 
   private appendToLog(node: HTMLElement): void {
-    this.log.appendChild(node);
+    // Keep the typing indicator pinned below the newest message.
+    if (this.typingNode !== null && this.typingNode.isConnected) {
+      this.log.insertBefore(node, this.typingNode);
+    } else {
+      this.log.appendChild(node);
+    }
     this.log.scrollTop = this.log.scrollHeight;
   }
 

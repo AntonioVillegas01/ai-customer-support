@@ -15,6 +15,8 @@ const en = {
   'app.settings': 'Settings',
   'app.logout': 'Sign out',
   'app.organization': 'Organization',
+  'app.themeDark': 'Switch to dark mode',
+  'app.themeLight': 'Switch to light mode',
   'common.loading': 'Loading…',
   'common.loadMore': 'Load more',
   'common.empty': 'Nothing to show yet.',

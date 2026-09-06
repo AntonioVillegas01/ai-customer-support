@@ -101,7 +101,7 @@ export async function seed(db: Database): Promise<void> {
           organizationId: organization.id,
           publicKey: org.widgetKey,
           title: `${org.name} Support`,
-          primaryColor: '#2563eb',
+          primaryColor: '#0f766e',
           locale: 'en-US',
         })
         .returning(),

@@ -49,7 +49,7 @@ function boot(): void {
   button.setAttribute('aria-label', 'Open support chat');
   button.setAttribute('aria-expanded', 'false');
   button.style.cssText =
-    'width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;background:#2563eb;color:#fff;font-size:24px;box-shadow:0 4px 16px rgba(0,0,0,.3);display:block;margin-left:auto;margin-top:12px';
+    'width:56px;height:56px;border-radius:50%;border:0;cursor:pointer;background:#0f766e;color:#fff;font-size:24px;box-shadow:0 4px 16px rgba(0,0,0,.3);display:block;margin-left:auto;margin-top:12px';
   button.textContent = '💬';
 
   let open = false;

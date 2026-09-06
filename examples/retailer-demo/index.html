@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acme Retail — Tienda demo</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container topbar-inner">
+        <a class="brand" href="#">Acme<span>Retail</span></a>
+        <nav class="nav">
+          <a href="#productos">Productos</a>
+          <a href="#ofertas">Ofertas</a>
+          <a href="#envios">Envíos</a>
+          <a href="#contacto">Contacto</a>
+        </nav>
+        <button class="cart" type="button" aria-label="Carrito">🛒 <span class="cart-count">2</span></button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <p class="hero-kicker">Temporada 2026</p>
+        <h1>Todo para tu hogar,<br />entregado en 48 horas.</h1>
+        <p class="hero-sub">
+          Envío gratis en pedidos mayores a $50. Devoluciones sin costo dentro de 30 días.
+        </p>
+        <a class="btn-primary" href="#productos">Ver catálogo</a>
+      </div>
+    </section>
+
+    <main class="container" id="productos">
+      <h2>Más vendidos</h2>
+      <div class="grid">
+        <article class="card">
+          <div class="thumb" aria-hidden="true">🎧</div>
+          <h3>Audífonos NoiseFree Pro</h3>
+          <p class="price">$129.00</p>
+          <button class="btn-secondary" type="button">Agregar al carrito</button>
+        </article>
+        <article class="card">
+          <div class="thumb" aria-hidden="true">⌚</div>
+          <h3>Smartwatch Pulse 3</h3>
+          <p class="price">$199.00</p>
+          <button class="btn-secondary" type="button">Agregar al carrito</button>
+        </article>
+        <article class="card">
+          <div class="thumb" aria-hidden="true">🔊</div>
+          <h3>Bocina Compact Boom</h3>
+          <p class="price">$59.00</p>
+          <button class="btn-secondary" type="button">Agregar al carrito</button>
+        </article>
+        <article class="card">
+          <div class="thumb" aria-hidden="true">💡</div>
+          <h3>Lámpara Smart Glow</h3>
+          <p class="price">$34.00</p>
+          <button class="btn-secondary" type="button">Agregar al carrito</button>
+        </article>
+      </div>
+
+      <section class="info" id="envios">
+        <div class="info-item">
+          <h3>🚚 Envíos</h3>
+          <p>Estándar 3–5 días hábiles. Express 48h en zonas seleccionadas.</p>
+        </div>
+        <div class="info-item">
+          <h3>↩️ Devoluciones</h3>
+          <p>30 días para devolver cualquier producto sin preguntas.</p>
+        </div>
+        <div class="info-item">
+          <h3>🛡️ Garantía</h3>
+          <p>Todos los electrónicos incluyen 12 meses de garantía.</p>
+        </div>
+      </section>
+
+      <section class="help" id="contacto">
+        <h2>¿Necesitas ayuda?</h2>
+        <p>
+          Nuestro asistente virtual responde al instante sobre envíos, devoluciones, garantías y el
+          estado de tu pedido (prueba con <code>ORD-1001</code>). Haz clic en el botón de chat en la
+          esquina inferior derecha.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">© 2026 Acme Retail — Sitio demo para el widget de soporte.</div>
+    </footer>
+
+    <!-- AI Customer Support widget: one-line embed -->
+    <script src="http://localhost:3002/embed.js" data-widget-key="wgt_acme_local_demo_key" async></script>
+  </body>
+</html>

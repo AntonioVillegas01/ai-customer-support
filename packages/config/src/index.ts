@@ -30,7 +30,7 @@ export const envSchema = z.object({
   WIDGET_TOKEN_SECRET: z.string().min(32),
   API_KEY_PEPPER: z.string().min(32),
   REQUEST_BODY_LIMIT_MB: z.coerce.number().positive().default(2),
-  WORKER_HEALTH_PORT: z.coerce.number().int().default(3002),
+  WORKER_HEALTH_PORT: z.coerce.number().int().default(3003),
   KNOWLEDGE_UPLOAD_MAX_BYTES: z.coerce.number().int().positive().default(20 * 1024 * 1024),
 
   AI_PROVIDER: z.enum(['openrouter', 'gemini', 'fake']).default('fake'),

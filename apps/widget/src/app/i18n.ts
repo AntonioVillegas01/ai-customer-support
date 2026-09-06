@@ -17,6 +17,7 @@ const catalogs: Record<string, Record<string, string>> = {
     confirm: 'Confirm',
     cancel: 'Cancel',
     confirmExpired: 'This confirmation has expired.',
+    typing: 'Assistant is typing…',
     connectionLost: 'Reconnecting…',
     genericError: 'Something went wrong. Please try again.',
   },

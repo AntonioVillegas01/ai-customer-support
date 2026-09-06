@@ -99,11 +99,9 @@ Last reviewed: 2026-08-31 (post Gemini provider migration).
   `acs-knowledge` / `acs-attachments` must be created manually
   (`mc mb`) or knowledge ingestion fails with `NoSuchBucket`. Discovered during
   final verification; an init container in docker-compose is the fix.
-- **Local port collision on 3002.** The worker health server
-  (`WORKER_HEALTH_PORT`, default 3002) and the widget dev/preview server both
-  default to 3002 — and the seeded widget allowed-origin is
-  `http://localhost:3002`. Run the worker with `WORKER_HEALTH_PORT=3003` when
-  serving the widget locally.
+- **Local port collision on 3002 (resolved).** The worker health server now
+  defaults to `WORKER_HEALTH_PORT=3003`; the widget dev/preview server owns
+  3002 (the seeded widget allowed-origin is `http://localhost:3002`).
 - **Terraform is a starter, not a deployed configuration.** No remote state
   backend, no secrets-manager integration (placeholders), never applied against
   a real AWS account. Treat it as an architectural sketch with real resource
